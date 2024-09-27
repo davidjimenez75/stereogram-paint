@@ -277,9 +277,20 @@
         }
 
         function saveImage() {
+            // Create a new canvas to combine both images
+            const combinedCanvas = document.createElement('canvas');
+            combinedCanvas.width = canvas1.width + canvas2.width;
+            combinedCanvas.height = canvas1.height;
+            const combinedCtx = combinedCanvas.getContext('2d');
+
+            // Draw both canvases onto the combined canvas
+            combinedCtx.drawImage(canvas1, 0, 0);
+            combinedCtx.drawImage(canvas2, canvas1.width, 0);
+
+            // Create a download link for the combined image
             const link = document.createElement('a');
             link.download = 'stereogram.png';
-            link.href = canvas1.toDataURL();
+            link.href = combinedCanvas.toDataURL();
             link.click();
         }
 
